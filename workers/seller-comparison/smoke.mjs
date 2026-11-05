@@ -2,7 +2,12 @@
 // CAPTCHA handling, private headers or access-control workarounds are used.
 import {chromium} from 'playwright';
 import {writeFile} from 'node:fs/promises';
-const url='https://www.google.com/travel/flights/booking?tfs=CBwQAhpAEgoyMDI2LTEyLTEwIiAKA0dSVRIKMjAyNi0xMi0xMBoDR0lHKgJHMzIEMTU2MmoHCAESA0dSVXIHCAESA0dJRxpAEgoyMDI2LTEyLTE3IiAKA0dJRxIKMjAyNi0xMi0xNxoDR1JVKgJHMzIEMTM4MWoHCAESA0dJR3IHCAESA0dSVUABQAFIAXABggELCP___________wGYAQE&curr=BRL&hl=pt-BR&gl=BR';
+import {fetchGoogleOffers} from '../../supabase/functions/_shared/google-provider.js';
+// A fresh synthetic route avoids relying on a historical booking selection
+// whose available providers may have changed. Never reads a user's saved ping.
+const offers=await fetchGoogleOffers({origin:'GRU',destination:'SSA',depart:'2027-01-30',return:'2027-02-02',adults:2,stops:'any'},{topN:1});
+if(!offers.length)throw Error('No public synthetic itinerary available.');
+const url=offers[0].bookingUrl;
 const browser=await chromium.launch({headless:true});
 try{
  const page=await browser.newPage({locale:'pt-BR',viewport:{width:1280,height:900}});
