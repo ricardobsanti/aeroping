@@ -1,4 +1,4 @@
-import {placeForAirport} from './localities.js?v=13';
+import {placeForAirport} from './localities.js?v=14';
 const sites={G3:{name:'GOL',url:'https://b2c.voegol.com.br/compra'},TP:{name:'TAP',url:'https://www.flytap.com/'},AF:{name:'Air France',url:'https://www.airfrance.com.br/'}};
 export function safeSellerUrl(raw){try{const u=new URL(raw);if(u.protocol!=='https:'||u.username||u.password||u.port)return null;return u;}catch{return null;}}
 export const isGoogleBooking=u=>{const url=typeof u==='string'?safeSellerUrl(u):u;return !!url&&(/(^|\.)google\.[a-z.]+$/.test(url.hostname)||url.hostname==='googleadservices.com');};

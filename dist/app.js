@@ -1,9 +1,9 @@
-import {sellerExplanation} from './seller-links.js?v=13';
-import {cityName,destinationCover,hydrateDestinationPhotos,purchaseFor,matchedOffer,flightPanel} from './travel-view.js?v=13';
-import {localityInput,resolvePlace,placeForAirport} from './localities.js?v=13';
-import {enablePush,disablePush} from './push-notifications.js?v=13';
-import {money,esc,status,latest,safeLink,validatePing,validateState,alertFor,milesComparison,freshState,demoState} from './core.js?v=13';
-import {cloudConfig,configureCloud,signedIn,signIn,signOut,readCloud,writeCloud,cloudRevision,accountProfile,flightRequest} from './cloud-v2.js?v=13';
+import {sellerExplanation} from './seller-links.js?v=14';
+import {cityName,destinationCover,hydrateDestinationPhotos,purchaseFor,matchedOffer,flightPanel} from './travel-view.js?v=14';
+import {localityInput,resolvePlace,placeForAirport} from './localities.js?v=14';
+import {enablePush,disablePush} from './push-notifications.js?v=14';
+import {money,esc,status,latest,safeLink,validatePing,validateState,alertFor,milesComparison,freshState,demoState} from './core.js?v=14';
+import {cloudConfig,configureCloud,signedIn,signIn,signOut,readCloud,writeCloud,cloudRevision,accountProfile,flightRequest} from './cloud-v2.js?v=14';
 import {paintAccountProfile} from './profile.js';
 const STORE='aeroping-v1', main=document.querySelector('#main'),modal=document.querySelector('#modal');
 let state,filter='all',view='',revision=null,cloudBusy=false,cloudDirty=false,cloudConflict=false,cloudTimer,installPrompt,toastTimer;

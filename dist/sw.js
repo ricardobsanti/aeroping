@@ -1,5 +1,5 @@
-const CACHE='aeroping-shell-v13';
-const FILES=['./','./index.html','./styles.css?v=13','./app.js?v=13','./travel-view.js?v=13','./seller-links.js?v=13','./flight-search-ui.js?v=13','./push-notifications.js?v=13','./icon-v10-192.png','./icon-v10-512.png','./core.js?v=13','./localities.js?v=13','./localities-data.js?v=13','./cloud-v2.js?v=13','./google-auth.js?v=13','./shared-ui.js?v=13','./site-config.js','./profile.js','./icon-v10.svg','./manifest.webmanifest?v=13'];
+const CACHE='aeroping-shell-v14';
+const FILES=['./','./index.html','./styles.css?v=14','./app.js?v=14','./travel-view.js?v=14','./seller-links.js?v=14','./flight-search-ui.js?v=14','./push-notifications.js?v=14','./icon-v10-192.png','./icon-v10-512.png','./core.js?v=14','./localities.js?v=14','./localities-data.js?v=14','./cloud-v2.js?v=14','./google-auth.js?v=14','./shared-ui.js?v=14','./site-config.js','./profile.js','./icon-v10.svg','./manifest.webmanifest?v=14'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)));self.skipWaiting();});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('aeroping-shell-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
 // Push works while the page is closed, after permission on this device.
