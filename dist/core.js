@@ -1,4 +1,4 @@
-export const money = n => new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0}).format(n);
+export const money = n => new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:2}).format(n);
 export const esc = value => String(value ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function status(p){const n=p.quotes.at(-1)?.price;if(p.paused)return 'paused';if(n==null)return 'empty';if(n<=p.target)return 'hit';if(n<=p.target*(1+p.tolerance/100))return 'warm';return 'watch';}
 export function latest(p){return p.quotes.at(-1)?.price ?? null;}

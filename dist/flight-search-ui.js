@@ -1,7 +1,7 @@
-import {localityInput,resolvePlace,placeForAirport,airportName} from './localities.js?v=8';
-import {sharedUi} from './app.js?v=8';
-import {flightRequest,signedIn} from './cloud-v2.js?v=8';
-import {esc,money} from './core.js?v=8';
+import {localityInput,resolvePlace,placeForAirport,airportName} from './localities.js?v=9';
+import {sharedUi} from './app.js?v=9';
+import {flightRequest,signedIn} from './cloud-v2.js?v=9';
+import {esc,money} from './core.js?v=9';
 const label=code=>placeForAirport(code)?.city||code;
 const date=days=>new Date(Date.now()+days*86400000).toISOString().slice(0,10);
 let query={origin:'GRU',destination:'',depart:date(35),return:date(42),stops:'any'},result=null,error='',busy=false,sort='price',chosen=null;
