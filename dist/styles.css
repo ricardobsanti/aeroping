@@ -8,3 +8,5 @@
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 .google-btn{width:100%;background:#fff;color:#202124;border-color:#dadce0;min-height:44px;font-weight:550}.google-btn span{font-size:19px;font-weight:700;color:#4285f4;margin-right:3px}.login-divider{display:flex;align-items:center;gap:13px;font-size:10px;color:var(--muted);margin:18px 0}.login-divider:before,.login-divider:after{content:"";height:1px;background:var(--line);flex:1}
+
+.avatar{overflow:visible}.avatar>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;z-index:1}.avatar>span{z-index:2}.account-summary{display:flex;align-items:center;gap:13px;margin:18px 0}.account-avatar{height:50px;width:50px;font-size:18px}.account-summary strong{font-size:14px;font-weight:600;display:block}.account-summary small{display:block;font-size:11px;color:var(--muted);margin-top:5px}.couple-profile>span:nth-child(2){min-width:0}.couple-profile>span:nth-child(2)>strong{max-width:135px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

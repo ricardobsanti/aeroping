@@ -1,10 +1,13 @@
 import {SITE_CLOUD} from './site-config.js';
+import {profileFromUser} from './profile.js';
 const SESSION='aeroping-session-v2';
 export const cloudConfig=()=>SITE_CLOUD;
 export function configureCloud(){throw Error('A conexão do AeroPing já está configurada.');}
 function session(){try{return JSON.parse(localStorage.getItem(SESSION)||'null');}catch{return null;}}
 export const signedIn=()=>!!session()?.access_token;
 export const accountEmail=()=>session()?.user?.email||'';
+export const accountProfile=()=>profileFromUser(session()?.user);
+export async function refreshAccountProfile(){if(!signedIn())return null;const token=await accessToken();const r=await fetch(`${SITE_CLOUD.url}/auth/v1/user`,{headers:{apikey:SITE_CLOUD.key,Authorization:`Bearer ${token}`}});if(!r.ok)return accountProfile();const user=await r.json(),current=session();if(current?.user?.id===user.id)storeSession({...current,user});return accountProfile();}
 let refreshing=null;
 function storeSession(s){if(!s.access_token||!s.refresh_token||!s.user?.id)throw Error('Resposta de acesso inválida.');localStorage.setItem(SESSION,JSON.stringify(s));}
 export async function acceptOAuthSession(s){storeSession(s);try{return await membership();}catch(e){localStorage.removeItem(SESSION);throw e;}}

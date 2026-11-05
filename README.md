@@ -63,6 +63,8 @@ Para habilitar com um cliente Google já existente, acrescente o callback `https
 
 O ajuste de banco em `supabase/google-enrollment.sql` já foi aplicado ao projeto. Novas contas Google só recebem acesso quando o endereço confirmado pela identidade do provedor tem um convite privado ativo. Metadados editáveis pelo usuário não autorizam acesso. Contas já cadastradas continuam exigindo sua associação ao casal.
 
+O nome e a foto da conta Google aparecem no cabeçalho, no menu lateral e nos ajustes. O app atualiza os dados do perfil ao abrir uma sessão existente. Contas sem foto mostram as iniciais; imagens indisponíveis também retornam às iniciais. Esses dados são apenas de apresentação e não concedem permissões.
+
 O esquema está em `supabase/schema.sql`, e a função em `supabase/functions/enroll/index.ts`. O SQL é um registro da estrutura já criada: não o execute novamente sobre o projeto existente. A criação do primeiro casal e de seu convite é feita separadamente, sem guardar e-mail ou token no repositório.
 
 Fotos: Unsplash. Fontes: Google Fonts (DM Sans e Manrope).

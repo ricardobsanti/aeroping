@@ -1,0 +1,8 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {profileFromUser} from '../dist/profile.js';
+test('Google name and picture come from the linked provider identity',()=>{const p=profileFromUser({id:'u',email:'test@example.com',user_metadata:{name:'Old name'},identities:[{provider:'google',identity_data:{full_name:'Ana Maria Silva',picture:'https://lh3.googleusercontent.com/avatar'}}]});assert.equal(p.name,'Ana Maria Silva');assert.equal(p.initials,'AS');assert.equal(p.avatar,'https://lh3.googleusercontent.com/avatar');assert.equal(p.google,true);});
+test('Supabase profile metadata is available when identity data is not included',()=>{const p=profileFromUser({id:'u',user_metadata:{full_name:'José Müller',avatar_url:'https://example.com/photo.png'},app_metadata:{providers:['email','google']}});assert.equal(p.name,'José Müller');assert.equal(p.initials,'JM');assert.equal(p.google,true);});
+test('Password accounts have initials without requiring a photo',()=>{const p=profileFromUser({id:'u',email:'ricardo@example.com'});assert.equal(p.name,'ricardo');assert.equal(p.initials,'R');assert.equal(p.avatar,'');assert.equal(p.google,false);});
+test('Executable, insecure and credential-bearing avatar URLs are rejected',()=>{for(const avatar_url of ['javascript:alert(1)','data:image/svg+xml,test','http://example.com/a.png','https://user:password@example.com/a.png'])assert.equal(profileFromUser({id:'u',user_metadata:{avatar_url}}).avatar,'');});
+test('Signed-out users have no profile',()=>{assert.equal(profileFromUser(null),null);assert.equal(profileFromUser({}),null);});
