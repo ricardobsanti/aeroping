@@ -94,3 +94,7 @@ Preço-alvo e preferências ficam em Mais opções. Sem preço manual, a primeir
 A criação e a edição de pings agora exibem valor máximo por pessoa e margem percentual acima desse valor, junto ao destino e às datas. Os dois campos são obrigatórios; novos pings não substituem a escolha do usuário por uma meta automática. Criar ping a partir dos resultados também abre esse formulário. Exemplo: R$ 800 por pessoa, margem de 10%, aviso até R$ 880; o alvo continua R$ 800. Pings antigos podem ser editados para adotar uma meta manual.
 
 A fonte pública às vezes devolve uma página normal sem os dados de tarifas. O adaptador permite uma única nova tentativa nessa condição específica, com limite global de tempo. Restrições HTTP, consentimento e desafios não são contornados. Falhas isoladas em combinações de retorno preservam os itinerários válidos e indicam resultados parciais; nenhum preço é inferido. Testes: 30 verificações locais, mais busca nova real GRU–SSA de 23 a 25/01/2027 no servidor.
+
+## Ícone adaptável
+
+A marca usa um avião vetorial centralizado, com fundo mostarda opaco em toda a área. O SVG é a fonte visual; as versões PNG de 192 e 512 pixels são destinadas ao sistema operacional. O manifesto declara entradas separadas any e maskable, e o símbolo cabe na zona circular segura. Não há moldura escura nem cantos transparentes no arquivo. Nomes versionados atualizam os recursos do site; ícones de aplicativos já instalados dependem também da atualização pelo navegador e pelo lançador do aparelho.
