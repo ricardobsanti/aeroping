@@ -10,12 +10,15 @@ try{
  await page.getByRole('heading',{name:'Opções de reserva',exact:true}).waitFor({state:'visible',timeout:45000});
  // The airline row arrives before the agency responses. Never treat that first
  // row as a completed comparison while the page is still searching.
- for(const label of ['Carregando resultados','Buscando preços'])for(const node of await page.getByText(label,{exact:true}).all())await node.waitFor({state:'hidden',timeout:45000});
+ // Some static accessibility loading labels remain present after settlement.
+ // Wait for multiple actual offers, then record the state even on timeout so
+ // a single-seller or incomplete response is diagnosed rather than accepted.
+ await page.waitForFunction(()=>Array.from(document.querySelectorAll('button')).filter(e=>/Continue para reservar/.test(e.getAttribute('aria-label')||'')).length>1,{},{timeout:45000}).catch(()=>{});
  const more=page.getByRole('button',{name:/Mais \d+ opções de reserva/});if(await more.count())await more.click();
  const options=await page.getByRole('button',{name:/Continue para reservar/}).evaluateAll(elements=>elements.map(e=>({label:e.getAttribute('aria-label'),text:e.textContent})));
  const body=await page.locator('body').innerText();
  await writeFile('seller-smoke.json',JSON.stringify({options,twoAdults:body.includes('2 passageiros'),currencyBRL:body.includes('R$')},null,2));
  await page.screenshot({path:'seller-smoke.png',fullPage:true});
- console.log(JSON.stringify({count:options.length,options}));
+ console.log(JSON.stringify({count:options.length,options,visibleText:body.slice(-16000)}));
  if(options.length<2)throw Error('Multiple seller prices were not available in the normal browser.');
 }finally{await browser.close();}
