@@ -15,8 +15,8 @@ Deno.serve(async(req:Request)=>{
   try{
     const raw=await req.text();if(raw.length>16384)return respond({error:'Solicitação inválida.'},413);
     const {token,email,password}=JSON.parse(raw);
-    if(typeof token!=='string'||!/^\w{64}$/.test(token)||typeof email!=='string'||typeof password!=='string'||password.length<12||password.length>128)
-      return respond({error:'Confira o convite, o e-mail e a senha de pelo menos 12 caracteres.'},400);
+    if(typeof token!=='string'||!/^\w{64}$/.test(token)||typeof email!=='string'||typeof password!=='string'||password.length<8||password.length>128)
+      return respond({error:'Confira o convite, o e-mail e a senha de pelo menos 8 caracteres.'},400);
     const invite=await rpc('check_enrollment',{p_token:token});
     if(!invite||invite.email!==email.trim().toLowerCase())return respond({error:'Convite inválido, expirado ou de outro e-mail.'},403);
     const r=await fetch(`${url}/auth/v1/admin/users`,{method:'POST',headers:serverHeaders,body:JSON.stringify({email:invite.email,password,email_confirm:true,app_metadata:{aeroping_enrolled:true}})});

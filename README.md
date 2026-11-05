@@ -51,7 +51,7 @@ O banco é a fonte principal dos dados. A cópia local ajuda durante falhas temp
 
 ## Ativação dos dois acessos
 
-O primeiro viajante recebe um link privado de ativação, separado do código público. Ele escolhe a própria senha (mínimo de 12 caracteres). Depois, em Ajustes, gera um convite para o e-mail do segundo viajante. Convites são credenciais privadas: não os coloque em issues, commits ou arquivos públicos. O hash fica em uma tabela privada; o token é validado pela função de servidor `enroll` antes de criar uma conta e associá-la ao casal. O endpoint faz a própria autenticação por convite e não recebe uma sessão de usuário existente. As funções privilegiadas de cadastro só podem ser executadas pela função de servidor.
+O primeiro viajante recebe um link privado de ativação, separado do código público. Ele escolhe a própria senha (mínimo de 8 caracteres). Depois, em Ajustes, gera um convite para o e-mail do segundo viajante. Convites são credenciais privadas: não os coloque em issues, commits ou arquivos públicos. O hash fica em uma tabela privada; o token é validado pela função de servidor `enroll` antes de criar uma conta e associá-la ao casal. O endpoint faz a própria autenticação por convite e não recebe uma sessão de usuário existente. As funções privilegiadas de cadastro só podem ser executadas pela função de servidor.
 
 Não existe cadastro público: o gatilho no Auth exige a marca de cadastro definida pela API administrativa da função `enroll`. O envio de e-mail não é necessário. O convite só permite cadastrar o endereço específico escolhido pelo primeiro viajante. O destinatário deve recebê-lo por um canal privado.
 
