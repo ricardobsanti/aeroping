@@ -1,0 +1,33 @@
+name: Validar comparação de vendedores
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - workers/seller-comparison/**
+      - .github/workflows/seller-browser-smoke.yml
+permissions:
+  contents: read
+jobs:
+  compare-public-route:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    defaults:
+      run:
+        working-directory: workers/seller-comparison
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts
+      - run: npx playwright install --with-deps chromium
+      - run: node smoke.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seller-source-probe
+          path: |
+            workers/seller-comparison/seller-smoke.json
+            workers/seller-comparison/seller-smoke.png
+          retention-days: 1

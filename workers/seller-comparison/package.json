@@ -1,0 +1,1 @@
+{"name":"aeroping-seller-comparison","private":true,"type":"module","dependencies":{"playwright":"1.64.1"},"engines":{"node":">=24"}}
