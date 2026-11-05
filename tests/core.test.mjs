@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {status,alertFor,validatePing,validateState,demoState,milesComparison,safeLink,esc,freshState} from '../dist/core.js';
+const ping=(price=1000)=>({...demoState().pings[0],target:1000,tolerance:10,paused:false,demo:false,quotes:[{price,source:'Teste',at:new Date().toISOString()}]});
+test('meta e margem incluem o limite exato',()=>{assert.equal(status(ping(1000)),'hit');assert.equal(status(ping(1100)),'warm');assert.equal(status(ping(1100.01)),'watch');assert.equal(status({...ping(),quotes:[]}),'empty');});
+test('radar pausado não emite alertas',()=>{const p={...ping(500),paused:true};assert.equal(status(p),'paused');assert.equal(alertFor(p,2000),null);});
+test('queda de 30% alerta mesmo fora da margem',()=>{assert.equal(alertFor(ping(1400),2000).type,'drop');assert.equal(alertFor(ping(1401),2000),null);});
+test('cotação no alvo tem prioridade sobre queda brusca',()=>assert.equal(alertFor(ping(900),2000).type,'hit'));
+test('milhas incluem taxas e custo de oportunidade',()=>{assert.deepEqual(milesComparison(3200,80000,25,350),{cost:2350,saving:850,breakEven:35.625});assert.throws(()=>milesComparison(0,80000,25,350));assert.throws(()=>milesComparison(3200,0,25,350));});
+test('datas impossíveis e trechos iguais são rejeitados',()=>{assert.throws(()=>validatePing({...ping(),depart:'2027-02-30'}));assert.throws(()=>validatePing({...ping(),origin:'LIS',destination:'LIS'}));assert.throws(()=>validatePing({...ping(),target:-1}));});
+test('backups válidos são aceitos e históricos corrompidos rejeitados',()=>{assert.equal(validateState(freshState()).version,1);assert.equal(validateState(demoState()).pings.length,3);const s=demoState();s.pings[0].quotes[0].price=-1;assert.throws(()=>validateState(s));const duplicate=demoState();duplicate.pings.push(duplicate.pings[0]);assert.throws(()=>validateState(duplicate));});
+test('links executáveis são rejeitados e conteúdo é escapado',()=>{assert.equal(safeLink('javascript:alert(1)'), '');assert.equal(safeLink('data:text/html,test'),'');assert.equal(safeLink('https://example.com'),'https://example.com/');assert.equal(esc('<script>"&'), '&lt;script&gt;&quot;&amp;');});
