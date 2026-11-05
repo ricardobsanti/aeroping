@@ -106,3 +106,11 @@ A tela inicial concentra os pings em cartões com foto, rota, datas, preço, met
 Ir para a compra usa o link exato da última cotação com URL válida, sem inventar tarifa ou direcionamento. Para consultas automáticas, abre o itinerário selecionado no Google Voos, que apresenta as opções de reserva. O preço é comparado explicitamente com a meta; links de compra não afirmam que uma oferta acima do alvo está dentro do orçamento. Históricos sem URL não ganham botões falsos. Os detalhes de voos só aparecem se o itinerário corresponde à rota, às datas e à cotação atual.
 
 As miniaturas são gratuitas, obtidas pelo PageImages da Wikipédia e pelos metadados do Wikimedia Commons, com filtro de conteúdo livre e crédito de autor/licença junto à imagem. O aplicativo guarda apenas o endereço e a atribuição em cache público local por sete dias. A foto é decorativa e não interfere na consulta de passagens; sem imagem disponível, mostra uma capa neutra. As imagens têm recorte visual para o formato do cartão.
+
+## Direcionamento para companhia ou vendedor
+
+A ação de compra não trata mais o Google Voos como o vendedor. Para ofertas com itinerário compatível da Azul ou LATAM, o app monta o endereço oficial de seleção usando os parâmetros observados no encaminhamento normal de reserva: aeroportos, ida, volta, dois adultos e econômica. Nenhum identificador publicitário ou sessão capturada é reutilizado. A página de seleção ainda exige conferir os voos e a tarifa; o link não garante reserva, preço congelado nem voo pré-selecionado.
+
+Links diretos de agências ou companhias registrados nas cotações são preservados. GOL, TAP e Air France têm acesso explicitamente rotulado ao site oficial quando não há encaminhamento de seleção validado; nesses casos a interface informa que o trecho precisa ser preenchido. Itinerários mistos, fornecedores desconhecidos e cotações sem dados compatíveis não recebem links inventados. Nos resultados, a comparação no Google fica identificada como comparação, sem se chamar compra.
+
+O caminho Azul foi conferido pelo botão normal de reserva. A companhia limitou o acesso do navegador automatizado durante o teste, então não foi possível validar a tarifa dentro do checkout; nenhuma restrição foi contornada e nenhuma compra foi iniciada. Os testes locais verificam os parâmetros e a resolução dos links de vendedores.

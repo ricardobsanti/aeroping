@@ -1,8 +1,9 @@
-import {destinationCover,hydrateDestinationPhotos} from './travel-view.js?v=11';
-import {localityInput,resolvePlace,placeForAirport,airportName} from './localities.js?v=11';
-import {sharedUi} from './app.js?v=11';
-import {flightRequest,signedIn} from './cloud-v2.js?v=11';
-import {esc,money} from './core.js?v=11';
+import {sellerForOffer,sellerExplanation} from './seller-links.js?v=13';
+import {destinationCover,hydrateDestinationPhotos} from './travel-view.js?v=13';
+import {localityInput,resolvePlace,placeForAirport,airportName} from './localities.js?v=13';
+import {sharedUi} from './app.js?v=13';
+import {flightRequest,signedIn} from './cloud-v2.js?v=13';
+import {esc,money} from './core.js?v=13';
 const label=code=>placeForAirport(code)?.city||code;
 const date=days=>new Date(Date.now()+days*86400000).toISOString().slice(0,10);
 let query={origin:'GRU',destination:'',depart:date(35),return:date(42),stops:'any'},result=null,error='',busy=false,sort='price',chosen=null;
@@ -11,7 +12,7 @@ const minute=n=>`${Math.floor(n/60)}h${n%60?` ${n%60}min`:''}`;
 const time=s=>s?.slice(11,16)||'—';
 const shortDate=s=>new Date(s.slice(0,10)+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'short'});
 function legSummary(f,i){const first=f.legs[0],last=f.legs.at(-1);return `<div class="flight-leg"><div class="leg-direction">${i?'VOLTA':'IDA'} <span>${esc(shortDate(first.departure))}</span></div><div class="leg-times"><strong>${esc(time(first.departure))}<small>${esc(first.origin)}</small></strong><div class="leg-path"><span>${minute(f.duration)}</span><i></i><span>${f.stops?`${f.stops} parada${f.stops>1?'s':''}`:'Direto'}</span></div><strong>${esc(time(last.arrival))}<small>${esc(last.dest)}${last.arrival.slice(0,10)!==first.departure.slice(0,10)?' · '+esc(shortDate(last.arrival)):''}</small></strong></div><div class="leg-airline">${esc(f.airlineName||first.airlineName)}</div><p class="airport-names">${esc(airportName(first.origin))} → ${esc(airportName(last.dest))}</p></div>`;}
-function offerCard(o,index){return `<article class="offer-card"><div class="offer-flights">${o.flights.map(legSummary).join('')}<details><summary>Ver voos e conexões</summary><div class="offer-details">${o.flights.map((f,i)=>`<strong>${i?'Volta':'Ida'}</strong>${f.legs.map(l=>`<p>${esc(l.airlineName||l.airline)} · ${esc(l.airline)} ${esc(l.flightNumber)}<br>${esc(airportName(l.origin))} ${esc(shortDate(l.departure))} ${esc(time(l.departure))} → ${esc(airportName(l.dest))} ${esc(shortDate(l.arrival))} ${esc(time(l.arrival))}</p>`).join('')}`).join('')}<p>Horários locais de cada aeroporto. Classe econômica. Bagagem despachada não confirmada.</p></div></details></div><div class="offer-price">${index===0&&sort==='price'?'<span class="badge">MENOR DESTA CONSULTA</span>':''}<small>Ida e volta · 2 adultos</small><strong>${exactMoney(o.total)}</strong><span>${exactMoney(o.perPerson)} por pessoa</span><a class="btn primary" href="${esc(o.bookingUrl)}" target="_blank" rel="noopener noreferrer">Ir para a compra ↗</a><button class="btn ghost" data-watch-offer="${esc(o.id)}">Criar ping</button><small>Preço e disponibilidade podem mudar.</small></div></article>`;}
+function offerCard(o,index){const seller=sellerForOffer(o,query);return `<article class="offer-card"><div class="offer-flights">${o.flights.map(legSummary).join('')}<details><summary>Ver voos e conexões</summary><div class="offer-details">${o.flights.map((f,i)=>`<strong>${i?'Volta':'Ida'}</strong>${f.legs.map(l=>`<p>${esc(l.airlineName||l.airline)} · ${esc(l.airline)} ${esc(l.flightNumber)}<br>${esc(airportName(l.origin))} ${esc(shortDate(l.departure))} ${esc(time(l.departure))} → ${esc(airportName(l.dest))} ${esc(shortDate(l.arrival))} ${esc(time(l.arrival))}</p>`).join('')}`).join('')}<p>Horários locais de cada aeroporto. Classe econômica. Bagagem despachada não confirmada.</p></div></details></div><div class="offer-price">${index===0&&sort==='price'?'<span class="badge">MENOR DESTA CONSULTA</span>':''}<small>Ida e volta · 2 adultos</small><strong>${exactMoney(o.total)}</strong><span>${exactMoney(o.perPerson)} por pessoa</span>${seller?`<a class="btn primary" href="${esc(seller.url)}" target="_blank" rel="noopener noreferrer">${seller.kind==='site'?'Abrir':'Comprar na'} ${esc(seller.name)} ↗</a><small>${esc(sellerExplanation(seller))}</small>`:`<a class="btn ghost" href="${esc(o.bookingUrl)}" target="_blank" rel="noopener noreferrer">Comparar no Google Voos ↗</a><small>O link direto do vendedor não está disponível nesta consulta.</small>`}<button class="btn ghost" data-watch-offer="${esc(o.id)}">Criar ping</button><small>Preço e disponibilidade podem mudar.</small></div></article>`;}
 function watchForm(){return '';}
 
 let initialized=false;
