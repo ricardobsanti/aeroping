@@ -1,11 +1,6 @@
 name: Validar comparação de vendedores
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - workers/seller-comparison/**
-      - .github/workflows/seller-browser-smoke.yml
 permissions:
   contents: read
 jobs:
