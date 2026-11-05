@@ -8,6 +8,10 @@ try{
  const page=await browser.newPage({locale:'pt-BR',viewport:{width:1280,height:900}});
  await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});
  await page.getByRole('heading',{name:'Opções de reserva',exact:true}).waitFor({state:'visible',timeout:45000});
+ // The airline row arrives before the agency responses. Never treat that first
+ // row as a completed comparison while the page is still searching.
+ await page.getByText('Carregando resultados',{exact:true}).waitFor({state:'hidden',timeout:45000});
+ await page.getByText('Buscando preços',{exact:true}).waitFor({state:'hidden',timeout:45000});
  const more=page.getByRole('button',{name:/Mais \d+ opções de reserva/});if(await more.count())await more.click();
  const options=await page.getByRole('button',{name:/Continue para reservar/}).evaluateAll(elements=>elements.map(e=>({label:e.getAttribute('aria-label'),text:e.textContent})));
  const body=await page.locator('body').innerText();
