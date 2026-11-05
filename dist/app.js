@@ -1,5 +1,5 @@
 import {money,esc,status,latest,safeLink,validatePing,validateState,alertFor,milesComparison,freshState,demoState} from './core.js';
-import {cloudConfig,configureCloud,signedIn,signIn,signOut,readCloud,writeCloud,cloudRevision} from './cloud-v2.js';
+import {cloudConfig,configureCloud,signedIn,signIn,signOut,readCloud,writeCloud,cloudRevision} from './cloud-v2.js?v=4';
 const STORE='aeroping-v1', main=document.querySelector('#main'),modal=document.querySelector('#modal');
 let state,filter='all',view='',revision=null,cloudBusy=false,cloudDirty=false,cloudConflict=false,cloudTimer,installPrompt,toastTimer;
 try{const saved=localStorage.getItem(STORE);state=saved?validateState(JSON.parse(saved)):freshState();}catch{state=freshState();queueMicrotask(()=>toast('Não foi possível ler os dados. Você pode restaurar um backup nos ajustes.'));}

@@ -55,6 +55,14 @@ O primeiro viajante recebe um link privado de ativação, separado do código p�
 
 Não existe cadastro público: o gatilho no Auth exige a marca de cadastro definida pela API administrativa da função `enroll`. O envio de e-mail não é necessário. O convite só permite cadastrar o endereço específico escolhido pelo primeiro viajante. O destinatário deve recebê-lo por um canal privado.
 
+## Login Google
+
+O fluxo Google está preparado com PKCE, troca do código de uso único e conferência de associação ao casal antes de manter a sessão. O botão aparece somente quando o provedor Google estiver habilitado nas configurações públicas do projeto Supabase. A configuração externa do provedor não é alterada por este código.
+
+Para habilitar com um cliente Google já existente, acrescente o callback `https://yaydshjqhfzrilxbdegv.supabase.co/auth/v1/callback` aos endereços autorizados desse cliente no Google Cloud, preservando os endereços dos outros aplicativos. Configure o Client ID e o Client Secret no provedor Google do projeto AeroPing. Em URL Configuration do Supabase, configure `https://ricardobsanti.github.io/aeroping/` como Site URL e como redirect permitido. O segredo nunca deve ser colocado no repositório.
+
+O ajuste de banco em `supabase/google-enrollment.sql` já foi aplicado ao projeto. Novas contas Google só recebem acesso quando o endereço confirmado pela identidade do provedor tem um convite privado ativo. Metadados editáveis pelo usuário não autorizam acesso. Contas já cadastradas continuam exigindo sua associação ao casal.
+
 O esquema está em `supabase/schema.sql`, e a função em `supabase/functions/enroll/index.ts`. O SQL é um registro da estrutura já criada: não o execute novamente sobre o projeto existente. A criação do primeiro casal e de seu convite é feita separadamente, sem guardar e-mail ou token no repositório.
 
 Fotos: Unsplash. Fontes: Google Fonts (DM Sans e Manrope).

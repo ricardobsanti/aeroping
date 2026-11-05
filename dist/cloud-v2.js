@@ -7,6 +7,7 @@ export const signedIn=()=>!!session()?.access_token;
 export const accountEmail=()=>session()?.user?.email||'';
 let refreshing=null;
 function storeSession(s){if(!s.access_token||!s.refresh_token||!s.user?.id)throw Error('Resposta de acesso inválida.');localStorage.setItem(SESSION,JSON.stringify(s));}
+export async function acceptOAuthSession(s){storeSession(s);try{return await membership();}catch(e){localStorage.removeItem(SESSION);throw e;}}
 async function auth(path,body){const r=await fetch(`${SITE_CLOUD.url}/auth/v1/${path}`,{method:'POST',headers:{apikey:SITE_CLOUD.key,'Content-Type':'application/json'},body:JSON.stringify(body)});const d=await r.json();if(!r.ok)throw Error('Não foi possível entrar. Confira o e-mail e a senha ou use seu convite para criar o primeiro acesso.');return d;}
 export async function signIn(email,password){const d=await auth('token?grant_type=password',{email,password});storeSession(d);try{return await membership();}catch(e){localStorage.removeItem(SESSION);throw e;}}
 export async function enroll(token,email,password){const r=await fetch(`${SITE_CLOUD.url}/functions/v1/enroll`,{method:'POST',headers:{apikey:SITE_CLOUD.key,'Content-Type':'application/json'},body:JSON.stringify({token,email,password})});const d=await r.json();if(!r.ok)throw Error(d.error||'Não foi possível ativar o acesso.');return signIn(email,password);}
