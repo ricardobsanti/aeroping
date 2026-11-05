@@ -1,0 +1,8 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {purchaseFor,purchaseButton} from '../dist/travel-view.js';
+const at=new Date().toISOString(),request={url:'https://www.google.com/travel/clk/f',method:'POST',fields:{u:'signed&value"<test>'}};
+const ping=()=>({id:'fixture',origin:'GRU',destination:'GIG',depart:'2026-12-10',return:'2026-12-17',quotes:[{price:500,total:1000,url:null,at,source:'SerpApi'}],bestOffer:{perPerson:500,total:1000,bookingUrl:null,bestSeller:{total:1000,sellerName:'Agência',bookingRequest:request},comparison:{checkedAt:at,sellersCompared:13},flights:[{legs:[{origin:'GRU',dest:'GIG',depDate:'2026-12-10'}]},{legs:[{origin:'GIG',dest:'GRU',depDate:'2026-12-17'}]}]}});
+test('the purchase button posts the exact validated seller handoff with escaped fields',()=>{const buy=purchaseFor(ping()),html=purchaseButton(buy);assert.equal(buy.name,'Agência');assert.match(html,/method="POST"/);assert.match(html,/signed&amp;value&quot;&lt;test&gt;/);assert.match(html,/Direcionar à compra/);assert.doesNotMatch(html,/<test>/);});
+test('expired merchant handoffs require a refresh instead of posting an old token',()=>{const p=ping();p.bestOffer.comparison.checkedAt=new Date(Date.now()-16*60000).toISOString();assert.match(purchaseButton(purchaseFor(p)),/Atualizar para comprar/);assert.doesNotMatch(purchaseButton(purchaseFor(p)),/<form/);});
+test('an agency quote without its handoff cannot fall back to a different airline',()=>{const p=ping();p.bestOffer.bestSeller.bookingRequest.url='https://evil.example';assert.equal(purchaseFor(p),null);});

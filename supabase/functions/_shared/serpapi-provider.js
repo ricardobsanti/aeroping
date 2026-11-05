@@ -62,6 +62,11 @@ export async function fetchSellerComparison(offer,q,{apiKey,reserve,fetcher=fetc
  // Reserve one credit atomically before network access, counting even failures.
  // No automatic retries or fallback paid requests are permitted here.
  if(!(await reserve()).ok)throw Error('PROVIDER_FREE_QUOTA');
+ const accountUrl=new URL('https://serpapi.com/account.json');accountUrl.searchParams.set('api_key',apiKey);
+ let accountResponse;try{accountResponse=await fetcher(accountUrl,{signal,redirect:'manual',headers:{Accept:'application/json'}});}catch{throw Error('PROVIDER_UNAVAILABLE');}
+ if(!accountResponse.ok)throw Error('PROVIDER_HTTP_'+accountResponse.status);
+ const account=await accountResponse.json();
+ if(account.plan_monthly_price!==0||account.plan_name!=='Free Plan'||!Number.isFinite(account.plan_searches_left)||account.plan_searches_left<=2)throw Error('PROVIDER_FREE_QUOTA');
  const url=new URL('https://serpapi.com/search.json');url.search=new URLSearchParams({...params,api_key:apiKey}).toString();
  let response;try{response=await fetcher(url,{signal,redirect:'manual',headers:{Accept:'application/json'}});}catch{throw Error('PROVIDER_UNAVAILABLE');}
  if(!response.ok)throw Error('PROVIDER_HTTP_'+response.status);

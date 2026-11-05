@@ -1,4 +1,4 @@
-import {flightRequest} from './cloud-v2.js?v=14';
+import {flightRequest} from './cloud-v2.js?v=15';
 export async function enablePush(){if(!('serviceWorker'in navigator)||!('PushManager'in window)||!('Notification'in window))throw Error('Este navegador não oferece notificações. No iPhone, instale o AeroPing na tela inicial e abra por lá.');
  const permission=await Notification.requestPermission();if(permission!=='granted')throw Error('Notificações não autorizadas. Os pings continuam na central.');
  const registration=await navigator.serviceWorker.ready;const {publicKey}=await flightRequest({mode:'push-key'});if(!publicKey)throw Error('As notificações ainda não estão disponíveis.');
