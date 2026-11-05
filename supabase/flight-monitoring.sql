@@ -71,7 +71,9 @@ begin
     p:=p||jsonb_build_object('lastScan',jsonb_build_object('at',now(),'nextAt',next_time,'status',case when p_data->>'error' is not null then 'error' when best is null then 'empty' when p->>'baggage'='true' then 'baggage' else 'ok' end,'message',msg));
     if best is not null then p:=p||jsonb_build_object('bestOffer',best); end if;
     if best is not null and p->>'baggage' is distinct from 'true' then
-     price:=(best->>'perPerson')::numeric; target:=(p->>'target')::numeric; tolerance:=(p->>'tolerance')::numeric;
+     price:=(best->>'perPerson')::numeric;
+     if p->>'autoTarget'='true' and p->>'baselinePrice' is null then p:=p||jsonb_build_object('baselinePrice',price,'target',greatest(1,round(price*.9,2)),'tolerance',0); end if;
+     target:=(p->>'target')::numeric; tolerance:=(p->>'tolerance')::numeric;
      old_price:=(p->'quotes'->-1->>'price')::numeric;
      quote:=jsonb_build_object('price',price,'at',now(),'source','Google Voos · consulta automática','url',best->>'bookingUrl','automatic',true,'total',best->'total');
      select coalesce(jsonb_agg(value order by ord),'[]') into offers from jsonb_array_elements((coalesce(p->'quotes','[]')||jsonb_build_array(quote))) with ordinality a(value,ord) where ord>jsonb_array_length(coalesce(p->'quotes','[]'))-364;

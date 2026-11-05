@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.mjs",
     "test": "node --test tests/*.test.mjs",
-    "check": "node --check dist/app.js && node --check dist/core.js && node --check dist/cloud-v2.js && node --check dist/shared-ui.js && node --check dist/site-config.js && node --check dist/google-auth.js && node --check dist/profile.js && node --check dist/flight-search-ui.js && node --check dist/push-notifications.js && node --check supabase/functions/_shared/google-provider.js"
+    "check": "node --check dist/app.js && node --check dist/core.js && node --check dist/cloud-v2.js && node --check dist/shared-ui.js && node --check dist/site-config.js && node --check dist/google-auth.js && node --check dist/profile.js && node --check dist/flight-search-ui.js && node --check dist/push-notifications.js && node --check supabase/functions/_shared/google-provider.js && node --check dist/localities.js && node --check dist/localities-data.js"
   },
   "engines": {
     "node": ">=20"
