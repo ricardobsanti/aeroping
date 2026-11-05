@@ -1,5 +1,5 @@
 import {SITE_CLOUD} from './site-config.js';
-import {acceptOAuthSession} from './cloud-v2.js?v=7';
+import {acceptOAuthSession} from './cloud-v2.js?v=8';
 const PENDING='aeroping-google-pkce-v1';
 export async function googleProviderEnabled(){try{const r=await fetch(`${SITE_CLOUD.url}/auth/v1/settings`,{headers:{apikey:SITE_CLOUD.key},signal:AbortSignal.timeout(6000)});return r.ok&&(await r.json()).external?.google===true;}catch{return false;}}
 export async function googleAuthorizationUrl(){

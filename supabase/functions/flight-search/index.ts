@@ -11,7 +11,7 @@ const hash=async(s:string)=>new Uint8Array(await crypto.subtle.digest('SHA-256',
 async function same(a:string,b:string){const x=await hash(a),y=await hash(b);return x.reduce((v,n,i)=>v|(n^y[i]),0)===0;}
 async function search(household:string,query:unknown,background=false){const q=validateSearch(query),key=Array.from(await hash(JSON.stringify(q)),n=>n.toString(16).padStart(2,'0')).join('');const cached=await worker('cache_get',{key});if(cached)return cached;
  const budget=await worker('budget',{household,background});if(!budget.ok)throw Error(budget.reason);
- const offers=await fetchGoogleOffers(q,{topN:3});const result={query:q,offers,fetchedAt:new Date().toISOString(),cached:false,source:'Google Voos',coverage:'Seleção de itinerários disponíveis; confira a tarifa final no fornecedor.'};await worker('cache_put',{key,result});return result;
+ const offers=await fetchGoogleOffers(q,{topN:3});const result={query:q,offers,partial:!!offers.partial,fetchedAt:new Date().toISOString(),cached:false,source:'Google Voos',coverage:'Seleção de itinerários disponíveis; confira a tarifa final no fornecedor.'};await worker('cache_put',{key,result});return result;
 }
 async function scan(household:string,ping:any,background=false){let result,error;const query=validateSearch(ping);try{result=await search(household,query,background);}catch(e){error=publicError(e);}
  const saved=await worker('commit',{household,pingId:ping.id,query,result:result||null,...(error?{error}:{})});

@@ -1,5 +1,5 @@
-import data from './localities-data.js?v=7';
-import {esc} from './core.js?v=7';
+import data from './localities-data.js?v=8';
+import {esc} from './core.js?v=8';
 export const normalize=s=>String(s||'').normalize('NFD').replace(/\p{M}/gu,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
 const translated={GRU:'São Paulo',CGH:'São Paulo',GIG:'Rio de Janeiro',SDU:'Rio de Janeiro',VCP:'Campinas',CNF:'Belo Horizonte',LIS:'Lisboa',LHR:'Londres',LGW:'Londres',LCY:'Londres',STN:'Londres',CDG:'Paris',ORY:'Paris',FCO:'Roma',CIA:'Roma',MXP:'Milão',LIN:'Milão',MAD:'Madri',JFK:'Nova York',LGA:'Nova York',EWR:'Nova York',HND:'Tóquio',NRT:'Tóquio',MEX:'Cidade do México',PTY:'Cidade do Panamá',CPT:'Cidade do Cabo',JNB:'Joanesburgo',PEK:'Pequim',PKX:'Pequim',ZRH:'Zurique',VIE:'Viena',BRU:'Bruxelas',ATH:'Atenas',CPH:'Copenhague',ARN:'Estocolmo',ICN:'Seul',GMP:'Seul',MUC:'Munique',PRG:'Praga',WAW:'Varsóvia',BER:'Berlim',EZE:'Buenos Aires',AEP:'Buenos Aires'};
 const preferred=['GRU','GIG','CNF','LIS','LHR','CDG','FCO','MXP','JFK','HND','MEX','PTY','CPT','JNB','PEK','ICN','EZE'];
