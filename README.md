@@ -128,3 +128,9 @@ A chave fica somente no esquema privado do Supabase, restrito ao servidor e ao e
 O pg_cron dispara o resumo todos os dias às 23h UTC, equivalente às 20h de America/Sao_Paulo na configuração atual, inclusive fins de semana e feriados. Ele registra um evento compartilhado com preços disponíveis, diferença percentual para a meta e indicação de falta de atualização. O resumo independe de atingir a meta e não consulta a SerpApi. Uma chave única por casal/dia evita duplicações. A revisão compartilhada incrementa com o evento. Os alertas de oportunidade continuam separados.
 
 Dispositivos com Web Push habilitado recebem o aviso; a entrega depende da permissão e do serviço do aparelho. O conteúdo também fica na Central de pings. A montagem, a supressão de duplicatas e o bloqueio da nona chamada foram verificados no banco em transações revertidas, sem notificações artificiais. A suíte local tem 55 testes aprovados. Os arquivos SQL são snapshots de alterações já aplicadas, não instruções para reexecutar no projeto existente.
+
+## Botão de compra e horários do ping
+
+Cada cartão mostra uma seção Compra da passagem com Direcionar à compra em largura total e o nome do vendedor abaixo. O mesmo rótulo é mantido quando o encaminhamento precisa ser renovado: o toque atualiza a oferta e abre seus detalhes para confirmar o botão de compra. O app não envia um encaminhamento vencido. Sem vendedor disponível, mostra Buscar ofertas para comprar.
+
+Último ping e Próximo ping previsto aparecem no cartão e nos detalhes, com data e horário de America/Sao_Paulo. Os valores vêm dos campos lastScan.at e lastScan.nextAt do servidor; a interface não inventa um horário. Pings pausados, nunca consultados, atrasados e tentativas sem cotação têm mensagens próprias. A próxima consulta é uma previsão sujeita à cota. Validação local: 59 testes aprovados.

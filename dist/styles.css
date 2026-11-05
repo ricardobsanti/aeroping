@@ -29,3 +29,5 @@
 .purchase-handoff{display:contents;margin:0}.purchase-handoff .btn{width:100%}
 
 .activity p{white-space:pre-line}
+
+.ping-schedule{margin:20px 0;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.ping-schedule dl{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0}.ping-schedule dt{font-size:12px;color:var(--muted);margin-bottom:7px}.ping-schedule dd{margin:0;font-size:15px;line-height:1.5;font-weight:600}.ping-schedule p{font-size:11px;line-height:1.6;color:var(--muted);margin:10px 0 0}.ping-purchase{display:grid;grid-template-columns:1fr;gap:10px}.ping-purchase h3{font:600 13px 'DM Sans',sans-serif;margin:0}.ping-purchase .primary{width:100%;min-height:54px;font-size:15px}.ping-purchase .ghost{min-height:44px}.ping-purchase p{font-size:12px;line-height:1.6;color:var(--muted);margin:0}.ping-purchase p strong{color:var(--text)}.ping-purchase p span{display:block;margin-top:5px}.journey-purchase>.ping-schedule{margin-bottom:0;padding-bottom:0;border-bottom:0}@media(max-width:380px){.ping-schedule dd{font-size:13px}.ping-schedule dt{font-size:11px}}

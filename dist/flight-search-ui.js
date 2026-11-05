@@ -1,9 +1,9 @@
-import {sellerForOffer,sellerExplanation} from './seller-links.js?v=15';
-import {destinationCover,hydrateDestinationPhotos,purchaseFor,purchaseButton} from './travel-view.js?v=15';
-import {localityInput,resolvePlace,placeForAirport,airportName} from './localities.js?v=15';
-import {sharedUi} from './app.js?v=15';
-import {flightRequest,signedIn} from './cloud-v2.js?v=15';
-import {esc,money} from './core.js?v=15';
+import {sellerForOffer,sellerExplanation} from './seller-links.js?v=16';
+import {destinationCover,hydrateDestinationPhotos,purchaseFor,purchaseButton} from './travel-view.js?v=16';
+import {localityInput,resolvePlace,placeForAirport,airportName} from './localities.js?v=16';
+import {sharedUi} from './app.js?v=16';
+import {flightRequest,signedIn} from './cloud-v2.js?v=16';
+import {esc,money} from './core.js?v=16';
 const label=code=>placeForAirport(code)?.city||code;
 const date=days=>new Date(Date.now()+days*86400000).toISOString().slice(0,10);
 let query={origin:'GRU',destination:'',depart:date(35),return:date(42),stops:'any'},result=null,error='',busy=false,sort='price',chosen=null;
