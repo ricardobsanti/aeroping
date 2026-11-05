@@ -98,3 +98,11 @@ A fonte pública às vezes devolve uma página normal sem os dados de tarifas. O
 ## Ícone adaptável
 
 A marca usa um avião vetorial centralizado, com fundo mostarda opaco em toda a área. O SVG é a fonte visual; as versões PNG de 192 e 512 pixels são destinadas ao sistema operacional. O manifesto declara entradas separadas any e maskable, e o símbolo cabe na zona circular segura. Não há moldura escura nem cantos transparentes no arquivo. Nomes versionados atualizam os recursos do site; ícones de aplicativos já instalados dependem também da atualização pelo navegador e pelo lançador do aparelho.
+
+## Tela principal e compra
+
+A tela inicial concentra os pings em cartões com foto, rota, datas, preço, meta, margem e ação de compra. Banner promocional, estatísticas grandes e blocos repetidos foram retirados. Os detalhes têm capa do destino, preço por pessoa e total para dois adultos, cartões independentes de ida e volta, dados de bagagem e histórico recolhido.
+
+Ir para a compra usa o link exato da última cotação com URL válida, sem inventar tarifa ou direcionamento. Para consultas automáticas, abre o itinerário selecionado no Google Voos, que apresenta as opções de reserva. O preço é comparado explicitamente com a meta; links de compra não afirmam que uma oferta acima do alvo está dentro do orçamento. Históricos sem URL não ganham botões falsos. Os detalhes de voos só aparecem se o itinerário corresponde à rota, às datas e à cotação atual.
+
+As miniaturas são gratuitas, obtidas pelo PageImages da Wikipédia e pelos metadados do Wikimedia Commons, com filtro de conteúdo livre e crédito de autor/licença junto à imagem. O aplicativo guarda apenas o endereço e a atribuição em cache público local por sete dias. A foto é decorativa e não interfere na consulta de passagens; sem imagem disponível, mostra uma capa neutra. As imagens têm recorte visual para o formato do cartão.
