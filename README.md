@@ -5,7 +5,13 @@ Radar de viagens para o casal: metas de preço, histórico de cotações, compar
 ## Estado da versão
 
 - Radares com origem, destino, datas, bagagem, conexões e margem de preço.
-- Registro manual de cotações por pessoa, ida e volta; orçamento para dois adultos.
+- Busca real de ida e volta, em reais, para dois adultos na classe econômica.
+- Filtros de conexões, horários, companhias, ordenação e link do itinerário para confirmar e reservar na fonte.
+- Criação de radar a partir dos resultados e atualização manual de preços.
+- Até 8 radares ativos monitorados em segundo plano aproximadamente a cada 6 horas; tentativas com erro voltam à fila em 2 horas.
+- Histórico automático e registro manual complementar; orçamento por pessoa e total do casal.
+- Pings por Web Push após ativação em cada aparelho compatível, incluindo com a página fechada. No iPhone, instalar na tela inicial.
+- Visual mostarda, fontes maiores, controles de toque e navegação adaptados ao celular.
 - Histórico e alertas calculados sobre cotações registradas.
 - Comparador dinheiro versus milhas, incluindo taxas e custo do milheiro.
 - Decisões de cada viajante, exportação e restauração de backups.
@@ -15,7 +21,7 @@ Radar de viagens para o casal: metas de preço, histórico de cotações, compar
 - Convite para o segundo viajante pelo painel de ajustes, sem envio automático de mensagens.
 - Prévia de compartilhamento com Open Graph e imagem PNG de 1200 × 630 pixels.
 
-**Ainda não há consultas automáticas a companhias aéreas, disponibilidade real, previsão por IA, emissão, WhatsApp ou monitoramento com o app fechado.** Os exemplos não são ofertas. A disponibilidade e as regras devem ser verificadas na fonte.
+A busca usa a página pública do Google Voos, sem API paga. É uma seleção de itinerários, não uma garantia de encontrar toda tarifa. A integração depende do formato e disponibilidade da fonte; não contorna restrições de acesso. Não há previsão por IA, emissão, pesquisa automática de milhas, WhatsApp ou calendário flexível nesta versão. As datas e os aeroportos são exatos. Bagagem despachada não confirmada nunca gera alerta de oferta compatível. Confirme preço, taxas, bagagem e disponibilidade antes de comprar.
 
 ## GitHub Pages
 
@@ -37,7 +43,7 @@ Abra `http://127.0.0.1:4173`. O site utiliza caminhos relativos e funciona no su
 
 ## Custos
 
-Nenhum serviço pago é ativado por este código. GitHub Pages atende a publicação estática em repositórios públicos no GitHub Free. O Supabase Free pode atender o uso inicial do casal, dentro dos limites do plano e sujeito a pausas por inatividade. Uma futura fonte de preços reais precisa ser avaliada separadamente, com limites de requisições e bloqueio de gastos.
+Nenhum serviço pago é ativado por este código. GitHub Pages atende a publicação estática em repositórios públicos no GitHub Free. O Supabase Free pode atender o uso inicial do casal, dentro dos limites do plano e sujeito a pausas por inatividade. A fonte pública não exige chave de API. O servidor limita a 80 consultas novas por dia por casal e 15 segundos entre consultas manuais novas; o cache dura 15 minutos. Datas de volta devem estar nos próximos 330 dias. A fila verifica dois radares a cada 15 minutos; os oito primeiros radares ativos elegíveis recebem monitoramento. Os demais podem ser consultados manualmente. Nenhum upgrade, cartão ou serviço pago foi contratado.
 
 - [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)
 - [Supabase Free](https://supabase.com/pricing)
@@ -68,3 +74,11 @@ O nome e a foto da conta Google aparecem no cabeçalho, no menu lateral e nos aj
 O esquema está em `supabase/schema.sql`, e a função em `supabase/functions/enroll/index.ts`. O SQL é um registro da estrutura já criada: não o execute novamente sobre o projeto existente. A criação do primeiro casal e de seu convite é feita separadamente, sem guardar e-mail ou token no repositório.
 
 Fotos: Unsplash. Fontes: Google Fonts (DM Sans e Manrope).
+
+## Busca e monitoramento no servidor
+
+Os arquivos supabase/flight-monitoring.sql, light-schedule.sql, light-push.sql e light-private-policies.sql registram alterações já aplicadas. Não os execute novamente no projeto existente. A função light-search valida a sessão no Auth e a associação ao casal antes de aceitar buscas. Cache, cotas, fila, chaves de agendamento e chaves de notificações ficam no esquema privado. Funções internas só são executáveis pelo servidor. O agendamento usa pg_cron e pg_net, com credencial aleatória privada. Não depende do computador ficar ligado. A pausa do plano gratuito ou indisponibilidade de fontes pode interromper as consultas.
+
+Preços automáticos são totais de ida e volta para dois adultos, divididos por dois para comparação com a meta. O preço da opção de volta já é o pacote completo e nunca é somado ao preço do pacote de ida. Salvamentos automáticos incrementam a revisão compartilhada; clientes antigos não sobrescrevem o histórico em segundo plano. Alertas repetidos no mesmo patamar são suprimidos. O histórico guarda até 365 consultas por radar e 500 eventos.
+
+A fonte e as licenças estão documentadas em supabase/functions/_shared/THIRD-PARTY.md. Verificação: 25 testes locais, buscas reais nacionais e internacionais no servidor, autenticação, isolamento, cache, agendamento HTTP, histórico, conflito de revisão e bagagem pendente. A entrega de notificações depende da permissão e do serviço de push de cada aparelho.
